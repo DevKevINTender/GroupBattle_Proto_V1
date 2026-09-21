@@ -59,7 +59,7 @@ func _auto_deploy_unit(card_node):
 		if "creator_card" in new_unit:
 			new_unit.creator_card = card_node
 		
-		new_unit.connect("tree_exiting", card_node, "_on_unit_destroyed")
+		new_unit.connect("unit_died", card_node, "_on_unit_destroyed")
 		# Добавляем на сцену внутрь клетки и центрируем
 		target_cell.add_child(new_unit)
 		new_unit.position = Vector2.ZERO 

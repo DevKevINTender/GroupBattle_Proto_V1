@@ -2,7 +2,7 @@ extends Resource
 class_name BattleGridData
 
 # Вместо словаря теперь используем простой массив
-var units_list: Array = []
+export(Array) var units_list: Array = []
 
 ## Добавить юнита в общий список
 func register_unit(unit) -> void:

@@ -8,7 +8,7 @@ export(int) var height = 4
 signal cell_clicked(grid_pos)
 
 # Словарь { Vector2: Нода_Клетки }
-var cells = {}
+export(Dictionary) var cells = {}
 
 func clear_data() -> void:
 	cells.clear()

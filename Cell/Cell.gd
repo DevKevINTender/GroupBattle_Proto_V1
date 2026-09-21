@@ -23,3 +23,14 @@ func _on_input_event(_viewport, event, _shape_idx):
 		if grid_model:
 			# Клетка напрямую шлет сигнал в модель!
 			grid_model.emit_signal("cell_clicked", grid_position)
+
+
+## Метод включает или выключает подсветку клетки (например, делает её красноватой)
+func set_highlight(is_visible: bool, color: Color = Color(1, 0.5, 0.5, 1)) -> void:
+	if is_visible:
+		modulate = color # Окрашиваем клетку (подберите нужный цвет)
+		
+	else:
+		modulate = Color(1, 1, 1, 1) # Возвращаем обычный цвет
+		print("Cell: клетка подсвечена ", color)
+

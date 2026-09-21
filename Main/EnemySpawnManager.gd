@@ -4,7 +4,7 @@ class_name EnemySpawnManager
 
 # ТРИ РЕСУРСА (Они независимы друг от друга)
 export(Resource) var grid_model           # MainGridModel.tres
-export(Resource) var battle_grid_data     # battle_grid_data.tres
+export(Resource) var unit_grid_model     # unit_grid_model.tres
 export(Resource) var current_level_config # Файл уровня, например Level1_Section1.tres
 
 func _ready():
@@ -20,7 +20,7 @@ func spawn_enemies() -> void:
 		push_error("Grid Model не подключен к EnemySpawnManager!")
 		return
 		
-	if not battle_grid_data:
+	if not unit_grid_model:
 		push_error("Battle Grid Data не подключен к EnemySpawnManager!")
 		return
 		
@@ -38,7 +38,7 @@ func spawn_enemies() -> void:
 			continue
 			
 		# 2. Проверяем занятость клетки напрямую через ресурс юнитов
-		var existing_unit = battle_grid_data.get_unit_at(coords)
+		var existing_unit = unit_grid_model.get_unit_at(coords)
 		if existing_unit != null and is_instance_valid(existing_unit):
 			push_error("Ошибка спавна: клетка %s уже занята юнитом %s!" % [str(coords), existing_unit.name])
 			continue
@@ -51,7 +51,7 @@ func spawn_enemies() -> void:
 			
 			# Настраиваем логические данные ДО добавления в дерево сцены.
 			# Это ОЧЕНЬ ВАЖНО: когда сработает add_child, внутри new_enemy вызовется _ready().
-			# Если у врага внутри _ready() прописана саморегистрация в battle_grid_data,
+			# Если у врага внутри _ready() прописана саморегистрация в unit_grid_model,
 			# он автоматически запишет себя туда по ПРАВИЛЬНЫМ координатам!
 			if "grid_position" in new_enemy:
 				new_enemy.grid_position = coords

@@ -1,5 +1,4 @@
 extends Area2D
-class_name SelectableComponent
 
 export(Resource) var movement_channel 
 
@@ -14,13 +13,11 @@ func _input_event(_viewport: Object, event: InputEvent, _shape_idx: int) -> void
 			
 			if movement_channel.selected_unit == parent_unit:
 				movement_channel.deselect_unit()
-				print("Компонент: Выделение с юнита снято.")
+				print("MoveComponent: Выделение с юнита снято.")
 			
 			else:
 				if movement_channel.selected_unit != null:
 					movement_channel.deselect_unit()
 					
 				movement_channel.select_unit(parent_unit)
-				print("Компонент: Юнит выбран.")
-			
-			get_tree().set_input_as_handled()
+				print("MoveComponent: Юнит выбран.")

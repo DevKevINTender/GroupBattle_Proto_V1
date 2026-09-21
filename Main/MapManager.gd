@@ -24,7 +24,7 @@ func generate_map() -> void:
 	for x in range(grid_model.width):
 		for y in range(grid_model.height):
 			var cell_instance = cell_scene.instance()
-			add_child(cell_instance)
+
 			
 			# Позиционирование с учетом смещения к центру (0,0)
 			var pos_x = offset_x + (x * (cell_size + spacing))
@@ -34,5 +34,4 @@ func generate_map() -> void:
 			var grid_pos = Vector2(x, y)
 			cell_instance.grid_position = grid_pos
 			
-			# Регистрируем клетку в нашем общем "ScriptableObject" ресурсе
-			grid_model.register_cell(grid_pos, cell_instance)
+			add_child(cell_instance)

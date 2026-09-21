@@ -1,23 +1,22 @@
 extends Node
 class_name UnitMovementManager
 
-# ТРИ НЕЗАВИСИМЫХ РЕСУРСА
 export(Resource) var grid_model       # MainGridModel.tres (только клетки)
-export(Resource) var battle_grid_data # battle_grid_data.tres (только юниты)
+export(Resource) var unit_grid_model # unit_grid_model.tres (только юниты)
 export(Resource) var movement_channel # ActiveMovementChannel.tres (выделенный юнит)
 
 func _ready():
-	# Нам больше не нужно ждать idle_frame и вручную перебирать все клетки!
 	if grid_model:
-		# Подписываемся на ЕДИНЫЙ сигнал клика прямо в модели сетки
 		grid_model.connect("cell_clicked", self, "_on_cell_clicked")
 	else:
-		push_error("Grid Model не подключен к UnitMovementManager!")
+		push_error("UnitMovementManager: Grid Model не подключен")
 		
 	if movement_channel:
 		movement_channel.clear()
 		movement_channel.connect("unit_selected", self, "_on_unit_selected")
 		movement_channel.connect("unit_deselected", self, "_on_unit_deselected")
+	else:
+		push_error("UnitMovementManager: Movement Channel не подключен")
 
 func _on_unit_selected(unit_node):
 	unit_node.modulate = Color(1.3, 1.3, 1.3, 1.0) 
@@ -28,7 +27,7 @@ func _on_unit_deselected(unit_node):
 
 # ОБРАБОТКА КЛИКА (Сигнал прилетает из модели сетки)
 func _on_cell_clicked(grid_pos: Vector2):
-	print("Получен сигнал нажатия на клетку")
+	print("UnitMovementManager: сигнал получен - нажатие на клетку")
 	# Если никто не выбран — игнорируем
 	if not movement_channel or movement_channel.selected_unit == null:
 		return
@@ -38,10 +37,10 @@ func _on_cell_clicked(grid_pos: Vector2):
 		return
 		
 	# 2. МЕНЕДЖЕР САМ ПРОВЕРЯЕТ ПРЕПЯТСТВИЕ: заглядывает в ресурс юнитов
-	if battle_grid_data:
-		var obstacle_unit = battle_grid_data.get_unit_at(grid_pos)
+	if unit_grid_model:
+		var obstacle_unit = unit_grid_model.get_unit_at(grid_pos)
 		if obstacle_unit != null and is_instance_valid(obstacle_unit):
-			print("Менеджер: Клетка ", grid_pos, " занята юнитом ", obstacle_unit.name)
+			print("UnitMovementManager: Клетка ", grid_pos, " занята юнитом ", obstacle_unit.name)
 			return
 
 	# Находим саму ноду клетки, чтобы перенести туда юнит физически

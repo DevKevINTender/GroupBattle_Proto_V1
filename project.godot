@@ -12,12 +12,17 @@ _global_script_classes=[ {
 "base": "Resource",
 "class": "BattleGridData",
 "language": "GDScript",
-"path": "res://BattleGridData/BattleGridModel.gd"
+"path": "res://UnitGridData/UnitGridModel.gd"
 }, {
 "base": "Area2D",
 "class": "Cell",
 "language": "GDScript",
 "path": "res://Cell/Cell.gd"
+}, {
+"base": "Area2D",
+"class": "ClickableComponent",
+"language": "GDScript",
+"path": "res://Main/AttackRangeVisualizer/SelectionComponent.gd"
 }, {
 "base": "Resource",
 "class": "EnemySpawnData",
@@ -44,10 +49,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Main/UnitMovement/MovementChannel.gd"
 }, {
-"base": "Area2D",
-"class": "SelectableComponent",
+"base": "Resource",
+"class": "SelectionChannel",
 "language": "GDScript",
-"path": "res://Unit/UserUnit/SelectableComponent.gd"
+"path": "res://Main/AttackRangeVisualizer/SelectionChannel.gd"
 }, {
 "base": "Resource",
 "class": "TurnData",
@@ -67,12 +72,13 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "BattleGridData": "",
 "Cell": "",
+"ClickableComponent": "",
 "EnemySpawnData": "",
 "EnemySpawnManager": "",
 "GridDataResource": "",
 "LevelConfiguration": "",
 "MovementChannel": "",
-"SelectableComponent": "",
+"SelectionChannel": "",
 "TurnData": "",
 "Unit": "",
 "UnitMovementManager": ""

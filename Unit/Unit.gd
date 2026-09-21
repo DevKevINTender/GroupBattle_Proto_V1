@@ -1,6 +1,8 @@
 extends Node2D
 class_name Unit
 
+signal unit_died
+
 enum Team { PLAYER, ENEMY }
 
 export(Team) var team = Team.PLAYER
@@ -36,6 +38,8 @@ func take_damage(amount: int) -> void:
 ## Логика смерти юнита
 func die() -> void:
 	print(name, " погиб!")
+	emit_signal("unit_died")
+
 	if grid_data:
 		grid_data.unregister_unit(self)
 	queue_free() 

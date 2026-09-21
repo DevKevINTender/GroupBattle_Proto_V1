@@ -1,12 +1,12 @@
 extends Node
 
 # ЭКСПОРТЫ: Перетаскиваем оба .tres файла в инспекторе менеджера
-export(Resource) var grid_data
+export(Resource) var unit_grid_model
 export(Resource) var turn_model
 
 func _ready():
-	if not grid_data:
-		push_error("ВНИМАНИЕ: Забыли перетащить файл battle_grid_data.tres в BattleManager!")
+	if not unit_grid_model:
+		push_error("ВНИМАНИЕ: Забыли перетащить файл battle_unit_grid_model.tres в BattleManager!")
 		
 	if turn_model:
 		# Подписываемся на сигнал из ресурса хода
@@ -19,12 +19,12 @@ func _on_turn_requested():
 	start_combat_round()
 
 func start_combat_round():
-	if not grid_data:
+	if not unit_grid_model:
 		return
 		
 	print("--- Начало раунда атак ---")
 	
-	var all_units = grid_data.get_all_units()
+	var all_units = unit_grid_model.get_all_units()
 	print("Всего юнитов до сортировки: ", all_units.size())
 	all_units.sort_custom(self, "_sort_by_initiative")
 	
@@ -53,7 +53,7 @@ func _get_targets_for_unit(attacker: Unit) -> Array:
 		var target_cell = attacker.grid_position + offset
 		
 		if target_cell.x >= 0 and target_cell.x < 4 and target_cell.y >= 0 and target_cell.y < 4:
-			var unit_on_cell = grid_data.get_unit_at(target_cell)
+			var unit_on_cell = unit_grid_model.get_unit_at(target_cell)
 			if unit_on_cell != null and is_instance_valid(unit_on_cell) and unit_on_cell.team != attacker.team:
 				found_targets.append(unit_on_cell)
 				
