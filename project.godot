@@ -64,6 +64,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Logic/Unit/Unit.gd"
 }, {
+"base": "Resource",
+"class": "UnitMoveModel",
+"language": "GDScript",
+"path": "res://Model/UnitMoveData/UnitMoveData.gd"
+}, {
 "base": "Node",
 "class": "UnitMovementManager",
 "language": "GDScript",
@@ -81,6 +86,7 @@ _global_script_class_icons={
 "SelectionData": "",
 "TurnData": "",
 "Unit": "",
+"UnitMoveModel": "",
 "UnitMovementManager": ""
 }
 

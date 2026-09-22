@@ -4,21 +4,23 @@ class_name UnitMovementManager
 export(Resource) var grid_model      
 export(Resource) var unit_grid_model 
 export(Resource) var selection_model
+export(Resource) var unit_move_model
 
 export(NodePath) var indicator_manager_path
-onready var indicator_manager = get_node_or_null(indicator_manager_path)
 
 func _ready():
-	# СТАРЫЙ КОД УДАЛЕН: grid_model.connect("cell_clicked", ...) больше не нужен для движения!
-	
 	if selection_model:
 		selection_model.clear()
 		selection_model.connect("unit_selected", self, "_on_unit_selected")
 		selection_model.connect("unit_deselected", self, "_on_unit_deselected")
-		
-	# ПОДКЛЮЧАЕМСЯ К ИНДИКАТОРАМ
+
+	# Безопасное подключение через NodePath из инспектора
+	var indicator_manager = get_node_or_null(indicator_manager_path)
 	if indicator_manager:
-		indicator_manager.connect("indicator_selected", self, "_on_indicator_cell_clicked")
+		if not indicator_manager.is_connected("indicator_selected", self, "_on_indicator_cell_clicked"):
+			indicator_manager.connect("indicator_selected", self, "_on_indicator_cell_clicked")
+	else:
+		print(name, ": Менеджер индикаторов не найден по указанному пути!")
 
 func _on_unit_selected(unit_node):
 	unit_node.modulate = Color(1.3, 1.3, 1.3, 1.0) 
@@ -27,32 +29,44 @@ func _on_unit_deselected(unit_node):
 	if is_instance_valid(unit_node):
 		unit_node.modulate = Color(1, 1, 1, 1)
 
-# НОВЫЙ ОБРАБОТЧИК КЛИКА: срабатывает только при нажатии на зеленую клетку-индикатор
 func _on_indicator_cell_clicked(grid_pos: Vector2):
-	print(name, ": клик по индикатору на позиции ", grid_pos)
+	print("КЛИК ПОЛУЧЕН В UnitMovementManager на позиции: ", grid_pos) # <-- ДОБАВИТЬ ЭТУ СТРОКУ
 	
 	if not selection_model or selection_model.selected_unit == null:
+		print("Перемещение отменено: никто не выбран")
 		return
 
-	# Находим саму ноду клетки, чтобы перенести туда юнит физически
 	var cell_node = grid_model.get_cell(grid_pos)
 	if cell_node:
-		_on_unit_deselected(selection_model.selected_unit)
 		_move_unit_to(selection_model.selected_unit, cell_node)
+	else:
+		print("Ошибка: Нода клетки не найдена в grid_model для позиции ", grid_pos)
+
 
 # ФИЗИЧЕСКИЙ ПЕРЕНОС ЮНИТА
 func _move_unit_to(unit_node: Node2D, target_cell: Object) -> void:
-	if indicator_manager and indicator_manager.has_method("clear_indicators"):
-		indicator_manager.clear_indicators()
+	var old_pos = unit_node.grid_position
+	
+	# 1. ТРИГГЕР НАЧАЛА ХОДА: Мгновенно оповещаем визуализаторы
+	if unit_move_model:
+		unit_move_model.emit_signal("unit_movement_started", unit_node, old_pos)
 		
+	_on_unit_deselected(unit_node)
 	selection_model.clear()
 	
-	var old_cell = grid_model.get_cell(unit_node.grid_position)
+	# Смена родителя ноды
+	var old_cell = grid_model.get_cell(old_pos)
 	if old_cell:
 		old_cell.remove_child(unit_node)
 		
 	target_cell.add_child(unit_node)
 	unit_node.position = Vector2.ZERO 
 	
+	# Меняем логическую позицию
 	unit_node.grid_position = target_cell.grid_position
+	
+	# 2. ТРИГГЕР ЗАВЕРШЕНИЯ ХОДА: Оповещаем, что юнит встал на новую клетку
+	if unit_move_model:
+		unit_move_model.emit_signal("unit_movement_finished", unit_node, unit_node.grid_position)
+		
 	print("Юнит успешно перемещен на: ", unit_node.grid_position)
