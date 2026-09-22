@@ -2,9 +2,9 @@
 
 [ext_resource path="res://Logic/Main/MapManager.gd" type="Script" id=1]
 [ext_resource path="res://Model/TurnData/TurnModel.tres" type="Resource" id=2]
-[ext_resource path="res://Model/MovementChannel/ActiveMovementChannel.tres" type="Resource" id=3]
+[ext_resource path="res://Model/SelectionData/RangeSelectionModel.tres" type="Resource" id=3]
 [ext_resource path="res://Model/GridData/GridModel.tres" type="Resource" id=4]
-[ext_resource path="res://Model/SelectionChannel/ActiveSelectionChannel.tres" type="Resource" id=5]
+[ext_resource path="res://Model/SelectionData/MoveSelectionModel.tres" type="Resource" id=5]
 [ext_resource path="res://Model/LevelData/Level1/Level1.tres" type="Resource" id=6]
 [ext_resource path="res://Model/UnitGridData/UnitGridModel.tres" type="Resource" id=7]
 [ext_resource path="res://Logic/Main/AttackRangeVisualizer/AttackRangeVisualizer.gd" type="Script" id=8]
@@ -47,7 +47,7 @@ grid_model = ExtResource( 4 )
 script = ExtResource( 14 )
 grid_model = ExtResource( 4 )
 unit_grid_model = ExtResource( 7 )
-movement_channel = ExtResource( 3 )
+selection_model = ExtResource( 5 )
 
 [node name="EnemySpawnManager" type="Node" parent="."]
 script = ExtResource( 11 )
@@ -63,4 +63,4 @@ turn_model = ExtResource( 2 )
 [node name="AttackRangeVisualizer" type="Node" parent="."]
 script = ExtResource( 8 )
 grid_model = ExtResource( 4 )
-selection_channel = ExtResource( 5 )
+selection_channel = ExtResource( 3 )

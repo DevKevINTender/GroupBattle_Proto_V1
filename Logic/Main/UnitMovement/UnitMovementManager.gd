@@ -1,22 +1,22 @@
 extends Node
 class_name UnitMovementManager
 
-export(Resource) var grid_model       # MainGridModel.tres (только клетки)
-export(Resource) var unit_grid_model # unit_grid_model.tres (только юниты)
-export(Resource) var movement_channel # ActiveMovementChannel.tres (выделенный юнит)
+export(Resource) var grid_model      
+export(Resource) var unit_grid_model 
+export(Resource) var selection_model
 
 func _ready():
 	if grid_model:
 		grid_model.connect("cell_clicked", self, "_on_cell_clicked")
 	else:
-		push_error("UnitMovementManager: Grid Model не подключен")
+		print(name, ": Grid Model не подключен")
 		
-	if movement_channel:
-		movement_channel.clear()
-		movement_channel.connect("unit_selected", self, "_on_unit_selected")
-		movement_channel.connect("unit_deselected", self, "_on_unit_deselected")
+	if selection_model:
+		selection_model.clear()
+		selection_model.connect("unit_selected", self, "_on_unit_selected")
+		selection_model.connect("unit_deselected", self, "_on_unit_deselected")
 	else:
-		push_error("UnitMovementManager: Movement Channel не подключен")
+		print(name, ": Movement Channel не подключен")
 
 func _on_unit_selected(unit_node):
 	unit_node.modulate = Color(1.3, 1.3, 1.3, 1.0) 
@@ -27,9 +27,9 @@ func _on_unit_deselected(unit_node):
 
 # ОБРАБОТКА КЛИКА (Сигнал прилетает из модели сетки)
 func _on_cell_clicked(grid_pos: Vector2):
-	print("UnitMovementManager: сигнал получен - нажатие на клетку")
+	print(name, ": сигнал получен - нажатие на клетку")
 	# Если никто не выбран — игнорируем
-	if not movement_channel or movement_channel.selected_unit == null:
+	if not selection_model or selection_model.selected_unit == null:
 		return
 		
 	# 1. Проверяем границы через модель сетки
@@ -46,12 +46,12 @@ func _on_cell_clicked(grid_pos: Vector2):
 	# Находим саму ноду клетки, чтобы перенести туда юнит физически
 	var cell_node = grid_model.get_cell(grid_pos)
 	if cell_node:
-		_on_unit_deselected(movement_channel.selected_unit)
-		_move_unit_to(movement_channel.selected_unit, cell_node)
+		_on_unit_deselected(selection_model.selected_unit)
+		_move_unit_to(selection_model.selected_unit, cell_node)
 
 # ФИЗИЧЕСКИЙ ПЕРЕНОС ЮНИТА
 func _move_unit_to(unit_node: Node2D, target_cell: Object) -> void:
-	movement_channel.clear()
+	selection_model.clear()
 	
 	# Убираем из старого родителя
 	var old_cell = grid_model.get_cell(unit_node.grid_position)

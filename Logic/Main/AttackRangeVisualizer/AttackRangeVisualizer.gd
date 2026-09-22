@@ -6,8 +6,8 @@ export(Resource) var selection_channel
 var highlighted_cells: Array = []
 
 func _ready():
-	selection_channel.connect("unit_focused", self, "_on_unit_selected")
-	selection_channel.connect("unit_unfocused", self, "_on_unit_deselected")
+	selection_channel.connect("unit_selected", self, "_on_unit_selected")
+	selection_channel.connect("unit_deselected", self, "_on_unit_deselected")
 
 func _on_unit_selected(unit_node: Node2D) -> void:
 	clear_highlight()

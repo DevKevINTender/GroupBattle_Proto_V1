@@ -1,6 +1,5 @@
-# MovementChannel.gd
 extends Resource
-class_name MovementChannel
+class_name SelectionData
 
 signal unit_selected(unit_node)
 signal unit_deselected(unit_node) # Новый сигнал отмены
