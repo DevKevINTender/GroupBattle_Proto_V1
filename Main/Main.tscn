@@ -22,6 +22,8 @@
 current = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+offset = Vector2( -0.095, 0 )
+transform = Transform2D( 1, 0, 0, 1, -0.095, 0 )
 
 [node name="UnitPanel" parent="CanvasLayer" instance=ExtResource( 4 )]
 

@@ -8,12 +8,13 @@
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 4 )
+units_list = [  ]
 
 [node name="Unit" type="Node2D"]
 z_index = 1
 script = ExtResource( 2 )
-attack_pattern = [ Vector2( -1, 0 ) ]
 grid_data = SubResource( 1 )
+attack_pattern = [ Vector2( -1, 0 ) ]
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 0.529412, 0.878431, 0.552941, 1 )

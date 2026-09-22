@@ -1,6 +1,8 @@
 extends Node2D
 class_name Unit
 
+export(Resource) var grid_data
+
 signal unit_died
 
 enum Team { PLAYER, ENEMY }
@@ -16,18 +18,14 @@ export(int) var max_hp = 50
 onready var current_hp = max_hp
 
 # ЭКСПОРТ ДЛЯ ПЕРЕТЯГИВАНИЯ: теперь сюда в инспекторе можно перетащить файл .tres
-export(Resource) var grid_data
+
 export(String) var unit_id
 var creator_card : Node2D
 
 func _ready():
-	# Безопасно проверяем, не забыли ли перетащить ресурс в инспекторе
-	if grid_data:
-		grid_data.register_unit(self)
-	else:
-		push_error("ВНИМАНИЕ: Забыли перетащить файл battle_grid_data.tres в инспектор юнита " + name)
+	grid_data.register_unit(self)
 
-## Метод получения урона
+
 func take_damage(amount: int) -> void:
 	current_hp -= amount
 	print(name, " получил ", amount, " урона. Осталось HP: ", current_hp, "/", max_hp)
@@ -35,7 +33,7 @@ func take_damage(amount: int) -> void:
 	if current_hp <= 0:
 		die()
 
-## Логика смерти юнита
+
 func die() -> void:
 	print(name, " погиб!")
 	emit_signal("unit_died")
