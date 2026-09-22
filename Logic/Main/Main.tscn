@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Logic/Main/MapManager.gd" type="Script" id=1]
 [ext_resource path="res://Model/TurnData/TurnModel.tres" type="Resource" id=2]
@@ -7,14 +7,16 @@
 [ext_resource path="res://Model/SelectionData/MoveSelectionModel.tres" type="Resource" id=5]
 [ext_resource path="res://Model/LevelData/Level1/Level1.tres" type="Resource" id=6]
 [ext_resource path="res://Model/UnitGridData/UnitGridModel.tres" type="Resource" id=7]
-[ext_resource path="res://Logic/Main/AttackRangeVisualizer/AttackRangeVisualizer.gd" type="Script" id=8]
+[ext_resource path="res://Logic/Main/AttackRangeVisualizer.gd" type="Script" id=8]
 [ext_resource path="res://Logic/UnitPanel/UnitPanel.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Logic/Cell/Cell.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Logic/Main/EnemySpawnManager.gd" type="Script" id=11]
 [ext_resource path="res://Logic/Cell/cell.png" type="Texture" id=12]
 [ext_resource path="res://Logic/Main/BattleManager.gd" type="Script" id=13]
-[ext_resource path="res://Logic/Main/UnitMovement/UnitMovementManager.gd" type="Script" id=14]
+[ext_resource path="res://Logic/Main/UnitMovementManager.gd" type="Script" id=14]
 [ext_resource path="res://Logic/Main/TurnButton.gd" type="Script" id=15]
+[ext_resource path="res://Logic/Main/MoveIndicatorManager.gd" type="Script" id=16]
+[ext_resource path="res://Logic/MoveIndicator/MoveIndicator.tscn" type="PackedScene" id=17]
 
 [node name="Main" type="Node"]
 
@@ -45,6 +47,14 @@ grid_model = ExtResource( 4 )
 
 [node name="UnitMovementManager" type="Node" parent="."]
 script = ExtResource( 14 )
+grid_model = ExtResource( 4 )
+unit_grid_model = ExtResource( 7 )
+selection_model = ExtResource( 5 )
+indicator_manager_path = NodePath("MoveIndicatorManager")
+
+[node name="MoveIndicatorManager" type="Node" parent="UnitMovementManager"]
+script = ExtResource( 16 )
+indicator_scene = ExtResource( 17 )
 grid_model = ExtResource( 4 )
 unit_grid_model = ExtResource( 7 )
 selection_model = ExtResource( 5 )
