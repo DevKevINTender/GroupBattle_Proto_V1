@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Logic/UnitPanel/UnitPanel.gd" type="Script" id=1]
+[ext_resource path="res://Logic/UnitCard/UnitCard.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Model/GridData/GridModel.tres" type="Resource" id=3]
+[ext_resource path="res://Model/UnitGridData/UnitGridModel.tres" type="Resource" id=4]
+
+[node name="UnitPanel" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 1 )
+grid_model = ExtResource( 3 )
+battle_grid_data = ExtResource( 4 )
+card_layout_path = NodePath("CardLayout")
+
+[node name="CardLayout" type="HBoxContainer" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -100.0
+custom_constants/separation = 10
+
+[node name="UnitCard" parent="CardLayout" instance=ExtResource( 2 )]
+
+[node name="UnitCard2" parent="CardLayout" instance=ExtResource( 2 )]
+margin_left = 110.0
+margin_right = 210.0
+unit_id = "archer"
+
+[node name="UnitCard3" parent="CardLayout" instance=ExtResource( 2 )]
+margin_left = 220.0
+margin_right = 320.0
+unit_id = "wizard"

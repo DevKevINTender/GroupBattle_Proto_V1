@@ -12,62 +12,62 @@ _global_script_classes=[ {
 "base": "Resource",
 "class": "BattleGridData",
 "language": "GDScript",
-"path": "res://UnitGridData/UnitGridModel.gd"
+"path": "res://Model/UnitGridData/UnitGridModel.gd"
 }, {
 "base": "Area2D",
 "class": "Cell",
 "language": "GDScript",
-"path": "res://Cell/Cell.gd"
+"path": "res://Logic/Cell/Cell.gd"
 }, {
 "base": "Area2D",
 "class": "ClickableComponent",
 "language": "GDScript",
-"path": "res://Main/AttackRangeVisualizer/SelectionComponent.gd"
+"path": "res://Logic/Main/AttackRangeVisualizer/SelectionComponent.gd"
 }, {
 "base": "Resource",
 "class": "EnemySpawnData",
 "language": "GDScript",
-"path": "res://LevelData/EnemySpawnData.gd"
+"path": "res://Model/LevelData/EnemySpawnData.gd"
 }, {
 "base": "Node",
 "class": "EnemySpawnManager",
 "language": "GDScript",
-"path": "res://Main/EnemySpawnManager.gd"
+"path": "res://Logic/Main/EnemySpawnManager.gd"
 }, {
 "base": "Resource",
 "class": "GridDataResource",
 "language": "GDScript",
-"path": "res://GridData/GridModel.gd"
+"path": "res://Model/GridData/GridModel.gd"
 }, {
 "base": "Resource",
 "class": "LevelConfiguration",
 "language": "GDScript",
-"path": "res://LevelData/LevelConfiguration.gd"
+"path": "res://Model/LevelData/LevelConfiguration.gd"
 }, {
 "base": "Resource",
 "class": "MovementChannel",
 "language": "GDScript",
-"path": "res://Main/UnitMovement/MovementChannel.gd"
+"path": "res://Model/MovementChannel/MovementChannel.gd"
 }, {
 "base": "Resource",
 "class": "SelectionChannel",
 "language": "GDScript",
-"path": "res://Main/AttackRangeVisualizer/SelectionChannel.gd"
+"path": "res://Model/SelectionChannel/SelectionChannel.gd"
 }, {
 "base": "Resource",
 "class": "TurnData",
 "language": "GDScript",
-"path": "res://TurnData/TurnData.gd"
+"path": "res://Model/TurnData/TurnData.gd"
 }, {
 "base": "Node2D",
 "class": "Unit",
 "language": "GDScript",
-"path": "res://Unit/Unit.gd"
+"path": "res://Logic/Unit/Unit.gd"
 }, {
 "base": "Node",
 "class": "UnitMovementManager",
 "language": "GDScript",
-"path": "res://Main/UnitMovement/UnitMovementManager.gd"
+"path": "res://Logic/Main/UnitMovement/UnitMovementManager.gd"
 } ]
 _global_script_class_icons={
 "BattleGridData": "",
@@ -87,7 +87,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Group Battle Proto V 1"
-run/main_scene="res://Main/Main.tscn"
+run/main_scene="res://Logic/Main/Main.tscn"
 config/icon="res://icon.png"
 
 [gui]
