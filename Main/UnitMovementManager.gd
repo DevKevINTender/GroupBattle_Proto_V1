@@ -35,8 +35,7 @@ func _move_unit_to(unit_node: Node2D, target_cell: Object) -> void:
 	var old_pos = unit_node.grid_position
 	
 	unit_move_model.emit_signal("unit_movement_started", unit_node, old_pos)
-	_on_unit_deselected(unit_node)
-	selection_model.clear()
+	selection_model.deselect_unit()
 	
 	# Смена родителя ноды
 	var old_cell = grid_model.get_cell(old_pos)

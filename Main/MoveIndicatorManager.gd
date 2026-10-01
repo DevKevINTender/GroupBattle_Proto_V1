@@ -8,7 +8,6 @@ export(PackedScene) var indicator_scene
 export(Resource) var grid_model
 export(Resource) var unit_grid_model
 export(Resource) var selection_model
-export(Resource) var unit_move_model # Сюда перетаскиваем unit_move_model.tres
 
 var _active_indicators: Dictionary = {}
 
@@ -16,20 +15,13 @@ func _ready():
 	if selection_model:
 		selection_model.connect("unit_selected", self, "_on_unit_selected")
 		selection_model.connect("unit_deselected", self, "_on_unit_deselected")
-		
-	# ПОДПИСЫВАЕМСЯ НА НАЧАЛО ДВИЖЕНИЯ ЮНИТА
-	if unit_move_model:
-		unit_move_model.connect("unit_movement_started", self, "_on_unit_movement_started")
+
 
 func _on_unit_selected(unit_node):
 	clear_indicators()
 	_create_indicators_for(unit_node)
 
 func _on_unit_deselected(_unit_node):
-	clear_indicators()
-
-# Срабатывает мгновенно, когда UnitMovementManager дает команду идти
-func _on_unit_movement_started(_unit_node, _from_pos):
 	clear_indicators()
 
 func _create_indicators_for(unit_node):
