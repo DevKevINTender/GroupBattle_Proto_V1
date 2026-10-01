@@ -19,20 +19,16 @@ func _on_turn_requested():
 	start_combat_round()
 
 func start_combat_round():
-	if not unit_grid_model:
-		return
-		
 	print("--- Начало раунда атак ---")
 	
 	var all_units = unit_grid_model.get_all_units()
 	print("Всего юнитов до сортировки: ", all_units.size())
-	all_units.sort_custom(self, "_sort_by_initiative")
+#	all_units.sort_custom(self, "_sort_by_initiative")
 	
 	print("Всего юнитов: ", all_units.size())
 	
 	for unit in all_units:
-		if is_instance_valid(unit) and unit.current_hp > 0:
-			_execute_unit_turn(unit)
+		_execute_unit_turn(unit)
 			
 	print("--- Конец раунда атак ---")
 
@@ -43,21 +39,47 @@ func _execute_unit_turn(attacker: Unit):
 		return
 		
 	for target in targets:
-		if is_instance_valid(target) and target.current_hp > 0:
-			print(attacker.name, " (Инициатива: ", attacker.initiative, ") атакует ", target.name)
-			target.take_damage(attacker.attack_power)
+		_attack_targets(target, attacker)
+
+func _attack_targets(target: Unit, attacker: Unit):
+	var target_hp_component = _get_component(target, HpComponent);
+	var attacker_atack_component = _get_component(attacker, AttackComponent)
+	if target_hp_component.current_hp > 0:
+		print(attacker.name, " (Инициатива: ", attacker_atack_component.initiative, ") атакует ", target.name)
+		target_hp_component.take_damage(attacker_atack_component.attack_power)
 
 func _get_targets_for_unit(attacker: Unit) -> Array:
+	
 	var found_targets = []
-	for offset in attacker.attack_pattern:
-		var target_cell = attacker.grid_position + offset
-		
-		if target_cell.x >= 0 and target_cell.x < 4 and target_cell.y >= 0 and target_cell.y < 4:
-			var unit_on_cell = unit_grid_model.get_unit_at(target_cell)
-			if unit_on_cell != null and is_instance_valid(unit_on_cell) and unit_on_cell.team != attacker.team:
-				found_targets.append(unit_on_cell)
+	
+	var component = _get_component(attacker, AttackComponent)
+	
+	if component == null: 
+		return found_targets
+	
+
+	for offset in component.attack_pattern:
+		var target_cell = attacker.grid_position + offset	
+		var target_unit = unit_grid_model.get_unit_at(target_cell)
+		if target_unit == null:
+			break
+		var target_team = _get_component(target_unit, HpComponent).team
+		var attacker_team = _get_component(attacker, HpComponent).team
+		if target_team != attacker_team:
+			found_targets.append(target_unit)
 				
 	return found_targets
 
 func _sort_by_initiative(unit_a, unit_b) -> bool:
 	return unit_a.initiative > unit_b.initiative
+	
+	
+func _get_component(node: Node, type: Script) -> Node:
+	var component = null
+	
+	for child in node.get_children():
+		if child is type:
+			component = child
+			break
+			
+	return component

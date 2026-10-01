@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Main/UnitMovementManager.gd" type="Script" id=1]
 [ext_resource path="res://Main/MapManager.gd" type="Script" id=2]
@@ -6,10 +6,9 @@
 [ext_resource path="res://Main/MoveRangeManager.gd" type="Script" id=4]
 [ext_resource path="res://Model/LevelData/Level1/Level1.tres" type="Resource" id=5]
 [ext_resource path="res://Model/TurnData/TurnModel.tres" type="Resource" id=6]
-[ext_resource path="res://Model/SelectionData/RangeSelectionModel.tres" type="Resource" id=7]
 [ext_resource path="res://Model/UnitMoveData/UnitMoveModel.tres" type="Resource" id=8]
 [ext_resource path="res://Model/GridData/GridModel.tres" type="Resource" id=9]
-[ext_resource path="res://Model/SelectionData/MoveSelectionModel.tres" type="Resource" id=10]
+[ext_resource path="res://Model/SelectionData/SelectionModel.tres" type="Resource" id=10]
 [ext_resource path="res://Model/UnitGridData/UnitGridModel.tres" type="Resource" id=11]
 [ext_resource path="res://Logic/Cell/Cell.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Logic/MoveIndicator/MoveIndicator.tscn" type="PackedScene" id=13]
@@ -77,5 +76,5 @@ turn_model = ExtResource( 6 )
 script = ExtResource( 3 )
 indicator_scene = ExtResource( 19 )
 grid_model = ExtResource( 9 )
-selection_channel = ExtResource( 7 )
+selection_channel = ExtResource( 10 )
 unit_move_model = ExtResource( 8 )

@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node2D",
+"class": "AttackComponent",
+"language": "GDScript",
+"path": "res://Logic/AttackComponent/AttackComponent.gd"
+}, {
 "base": "Resource",
 "class": "BattleGridData",
 "language": "GDScript",
@@ -29,10 +34,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Main/EnemySpawnManager.gd"
 }, {
+"base": "Node2D",
+"class": "HpComponent",
+"language": "GDScript",
+"path": "res://Logic/HpComponent/HpComponent.gd"
+}, {
 "base": "Resource",
 "class": "LevelConfiguration",
 "language": "GDScript",
 "path": "res://Model/LevelData/LevelConfiguration.gd"
+}, {
+"base": "Node2D",
+"class": "MoveComponent",
+"language": "GDScript",
+"path": "res://Logic/MoveComponent/MoveComponent.gd"
 }, {
 "base": "Area2D",
 "class": "MoveIndicator",
@@ -70,11 +85,14 @@ _global_script_classes=[ {
 "path": "res://Main/UnitMovementManager.gd"
 } ]
 _global_script_class_icons={
+"AttackComponent": "",
 "BattleGridData": "",
 "Cell": "",
 "EnemySpawnData": "",
 "EnemySpawnManager": "",
+"HpComponent": "",
 "LevelConfiguration": "",
+"MoveComponent": "",
 "MoveIndicator": "",
 "MoveIndicatorManager": "",
 "SelectionData": "",

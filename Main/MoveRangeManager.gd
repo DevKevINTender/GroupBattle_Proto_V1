@@ -18,6 +18,17 @@ func _ready():
 
 
 func _on_unit_selected(unit_node):
+	
+	var component = null
+	
+	for child in unit_node.get_children():
+		if child is MoveComponent:
+			component = child
+	
+	if component == null: 
+		return
+		
+	
 	clear_indicators()
 	_create_indicators_for(unit_node)
 

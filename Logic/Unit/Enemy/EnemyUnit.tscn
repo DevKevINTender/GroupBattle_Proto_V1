@@ -1,22 +1,26 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Logic/Cell/cell.png" type="Texture" id=1]
 [ext_resource path="res://Logic/Unit/Unit.gd" type="Script" id=2]
-[ext_resource path="res://Model/UnitGridData/UnitGridModel.gd" type="Script" id=3]
+[ext_resource path="res://Logic/HpComponent/HpComponent.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Logic/Selection/Selection.tscn" type="PackedScene" id=4]
-
-[sub_resource type="Resource" id=1]
-script = ExtResource( 3 )
-units_list = [  ]
+[ext_resource path="res://Logic/AttackComponent/AttackComponent.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Model/UnitGridData/UnitGridModel.tres" type="Resource" id=6]
 
 [node name="Unit" type="Node2D"]
 script = ExtResource( 2 )
-grid_data = SubResource( 1 )
-team = 1
+unit_grid_model = ExtResource( 6 )
+hp_component_path = NodePath("HpComponent")
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 0.835294, 0.254902, 0.364706, 1 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 1 )
 
-[node name="RangeSelection" parent="." instance=ExtResource( 4 )]
+[node name="AttackComponent" parent="." instance=ExtResource( 5 )]
+attack_pattern = [ Vector2( 1, 0 ), Vector2( -1, 0 ) ]
+
+[node name="Selection" parent="." instance=ExtResource( 4 )]
+
+[node name="HpComponent" parent="." instance=ExtResource( 3 )]
+team = 1

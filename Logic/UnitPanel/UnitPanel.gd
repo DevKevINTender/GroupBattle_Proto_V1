@@ -59,12 +59,12 @@ func _auto_deploy_unit(card_node):
 		if "creator_card" in new_unit:
 			new_unit.creator_card = card_node
 		
-		new_unit.connect("unit_died", card_node, "_on_unit_destroyed")
-		# Добавляем на сцену внутрь клетки и центрируем
+		var new_unit_hp_component = _get_component(new_unit, HpComponent)
+		new_unit_hp_component.connect("unit_died", card_node, "_on_unit_destroyed")
+
 		target_cell.add_child(new_unit)
 		new_unit.position = Vector2.ZERO 
-		unit_grid_model.register_unit(new_unit)
-		# Обновляем статус карточки
+
 		card_node.spawned_unit_ref = new_unit
 		card_node.set_deployed(true)
 		print("Юнит автоматически размещен на позиции: ", target_pos)
@@ -75,20 +75,20 @@ func _auto_deploy_unit(card_node):
 func _remove_unit_from_field(card_node):
 	var unit = card_node.spawned_unit_ref
 	
-	if is_instance_valid(unit):
-		# Нам больше не нужно занулять cell.occupant! 
-		# Мы просто вызываем die() или удаляем юнит. 
-		# Если у вас в Unit.gd написан метод die(), лучше вызвать его. 
-		# Если нет — пишем вызов queue_free(). Но так как мы удалили _exit_tree из Unit,
-		# нужно убедиться, что юнит сам выпишется из базы данных.
-		if unit.has_method("die"):
-			unit.die() # Он сам выпишется из unit_grid_model и сделает queue_free()
-		else:
-			# Если метода die() нет, выписываем вручную перед удалением:
-			unit_grid_model.unregister_unit(unit)
-			unit.queue_free()
-		
-	# Сбрасываем статус карточки
+	var new_unit_hp_component = _get_component(unit, HpComponent) as HpComponent
+	new_unit_hp_component.die()
+
 	card_node.spawned_unit_ref = null
 	card_node.set_deployed(false)
 	print("Юнит убран с поля.")
+
+
+func _get_component(node: Node, type: Script) -> Node:
+	var component = null
+	
+	for child in node.get_children():
+		if child is type:
+			component = child
+			break
+			
+	return component

@@ -5,7 +5,6 @@ export(Resource) var grid_model
 export(Resource) var selection_channel
 export(Resource) var unit_move_model # Сюда перетаскиваем тот же unit_move_model.tres
 
-var highlighted_positions: Array = [] # Храним Vector2 позиции
 var _active_indicators: Dictionary = {}
 
 func _ready():
@@ -27,10 +26,19 @@ func _on_unit_movement_started(_unit_node, _from_pos):
 
 
 func _on_unit_selected(unit_node: Node2D) -> void:
+	var component = null
+	
+	for child in unit_node.get_children():
+		if child is AttackComponent:
+			component = child
+	
+	if component == null: 
+		return
+		
 	clear_indicators()
 	print("AttackRangeVisualizer: получен сигнал - юнит выбран")
 	var cell_size = grid_model.cell_size
-	for offset in unit_node.attack_pattern:
+	for offset in component.attack_pattern:
 		_create_indicators_for(unit_node, offset, cell_size)
 
 
