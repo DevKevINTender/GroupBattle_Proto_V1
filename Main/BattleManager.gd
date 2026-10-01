@@ -4,6 +4,7 @@ extends Node
 export(Resource) var unit_grid_model
 export(Resource) var turn_model
 
+
 func _ready():
 	if not unit_grid_model:
 		push_error("ВНИМАНИЕ: Забыли перетащить файл battle_unit_grid_model.tres в BattleManager!")
@@ -14,9 +15,10 @@ func _ready():
 	else:
 		push_error("ВНИМАНИЕ: Забыли перетащить файл turn_model.tres в BattleManager!")
 
-# Этот метод сработает, когда кнопка дернет сигнал в ресурсе
+
 func _on_turn_requested():
 	start_combat_round()
+
 
 func start_combat_round():
 	print("--- Начало раунда атак ---")
@@ -32,6 +34,7 @@ func start_combat_round():
 			
 	print("--- Конец раунда атак ---")
 
+
 func _execute_unit_turn(attacker: Unit):
 	var targets = _get_targets_for_unit(attacker)
 	print("Юнит ", attacker, " нашел ", targets.size())
@@ -41,6 +44,7 @@ func _execute_unit_turn(attacker: Unit):
 	for target in targets:
 		_attack_targets(target, attacker)
 
+
 func _attack_targets(target: Unit, attacker: Unit):
 	var target_hp_component = _get_component(target, HpComponent);
 	var attacker_atack_component = _get_component(attacker, AttackComponent)
@@ -48,8 +52,8 @@ func _attack_targets(target: Unit, attacker: Unit):
 		print(attacker.name, " (Инициатива: ", attacker_atack_component.initiative, ") атакует ", target.name)
 		target_hp_component.take_damage(attacker_atack_component.attack_power)
 
+
 func _get_targets_for_unit(attacker: Unit) -> Array:
-	
 	var found_targets = []
 	
 	var component = _get_component(attacker, AttackComponent)
