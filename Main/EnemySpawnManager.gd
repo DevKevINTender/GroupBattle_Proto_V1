@@ -61,7 +61,7 @@ func spawn_enemies() -> void:
 			# Добавляем дочерним элементом к клетке и центрируем
 			cell_node.add_child(new_enemy)
 			new_enemy.position = Vector2.ZERO
-			
+			unit_grid_model.register_unit(new_enemy)
 			print("Враг ", spawn_data.enemy_id, " успешно размещен на клетке: ", coords)
 		else:
 			push_error("Критическая ошибка: Нода клетки %s есть в модели, но отсутствует на сцене!" % str(coords))

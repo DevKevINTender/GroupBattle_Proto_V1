@@ -11,7 +11,7 @@ anchor_bottom = 1.0
 mouse_filter = 2
 script = ExtResource( 1 )
 grid_model = ExtResource( 3 )
-battle_grid_data = ExtResource( 4 )
+unit_grid_model = ExtResource( 4 )
 card_layout_path = NodePath("CardLayout")
 
 [node name="CardLayout" type="HBoxContainer" parent="."]

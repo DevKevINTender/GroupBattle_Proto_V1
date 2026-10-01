@@ -3,14 +3,14 @@ extends Control
 
 # ТРИ РЕСУРСА (Они независимы друг от друга)
 export(Resource) var grid_model       # MainGridModel.tres
-export(Resource) var battle_grid_data # battle_grid_data.tres
+export(Resource) var unit_grid_model # unit_grid_model.tres
 
 export(NodePath) var card_layout_path
 onready var card_layout = get_node(card_layout_path)
 
 func _ready():
-	if not battle_grid_data:
-		push_error("ВНИМАНИЕ: Забыли перетащить файл battle_grid_data.tres в инспектор UnitPanel!")
+	if not unit_grid_model:
+		push_error("ВНИМАНИЕ: Забыли перетащить файл unit_grid_model.tres в инспектор UnitPanel!")
 		
 	# Подключаем клики от всех карточек в панели
 	for card in card_layout.get_children():
@@ -26,19 +26,19 @@ func _on_card_selected(card_node):
 
 # Автоматическое размещение в первый свободный слот
 func _auto_deploy_unit(card_node):
-	if not grid_model or not battle_grid_data:
+	if not grid_model or not unit_grid_model:
 		return
 
 	var target_cell = null
 	var target_pos = Vector2.ZERO
 
-	# Ищем первую пустую клетку, опрашивая battle_grid_data вместо клеток
+	# Ищем первую пустую клетку, опрашивая unit_grid_model вместо клеток
 	for x in range(grid_model.width):
 		for y in range(grid_model.height):
 			var pos = Vector2(x, y)
 			
 			# Проверяем, свободна ли клетка по данным ресурса юнитов
-			var existing_unit = battle_grid_data.get_unit_at(pos)
+			var existing_unit = unit_grid_model.get_unit_at(pos)
 			if existing_unit == null or not is_instance_valid(existing_unit):
 				target_cell = grid_model.get_cell(pos)
 				target_pos = pos
@@ -63,7 +63,7 @@ func _auto_deploy_unit(card_node):
 		# Добавляем на сцену внутрь клетки и центрируем
 		target_cell.add_child(new_unit)
 		new_unit.position = Vector2.ZERO 
-		
+		unit_grid_model.register_unit(new_unit)
 		# Обновляем статус карточки
 		card_node.spawned_unit_ref = new_unit
 		card_node.set_deployed(true)
@@ -82,10 +82,10 @@ func _remove_unit_from_field(card_node):
 		# Если нет — пишем вызов queue_free(). Но так как мы удалили _exit_tree из Unit,
 		# нужно убедиться, что юнит сам выпишется из базы данных.
 		if unit.has_method("die"):
-			unit.die() # Он сам выпишется из battle_grid_data и сделает queue_free()
+			unit.die() # Он сам выпишется из unit_grid_model и сделает queue_free()
 		else:
 			# Если метода die() нет, выписываем вручную перед удалением:
-			battle_grid_data.unregister_unit(unit)
+			unit_grid_model.unregister_unit(unit)
 			unit.queue_free()
 		
 	# Сбрасываем статус карточки
