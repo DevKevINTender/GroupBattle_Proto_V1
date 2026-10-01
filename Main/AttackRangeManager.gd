@@ -1,10 +1,12 @@
 extends Node
 
+export(PackedScene) var indicator_scene
 export(Resource) var grid_model
 export(Resource) var selection_channel
 export(Resource) var unit_move_model # Сюда перетаскиваем тот же unit_move_model.tres
 
 var highlighted_positions: Array = [] # Храним Vector2 позиции
+var _active_indicators: Dictionary = {}
 
 func _ready():
 	if selection_channel:
@@ -16,31 +18,45 @@ func _ready():
 		unit_move_model.connect("unit_movement_started", self, "_on_unit_movement_started")
 
 func _on_unit_selected(unit_node: Node2D) -> void:
-	clear_highlight()
+	clear_indicators()
 	print("AttackRangeVisualizer: получен сигнал - юнит выбран")
 
 	for offset in unit_node.attack_pattern:
-		set_highlight(unit_node, offset)
+		_create_indicators_for(unit_node, offset)
 
-func set_highlight(unit_node: Node2D, offset: Vector2):
+func _create_indicators_for(unit_node: Node2D, offset: Vector2):
 	var target_pos = unit_node.grid_position + offset
 	if grid_model.is_position_inside_bounds(target_pos):
 		var cell_node = grid_model.get_cell(target_pos)
-		if cell_node and cell_node.has_method("set_highlight"):
-			var color = Color(1.5, 0.4, 0.4, 1.0)
-			cell_node.set_highlight(true, color) 
-			highlighted_positions.append(target_pos)
+		_spawn_indicator_at(target_pos)
+		
 
 func _on_unit_deselected(_unit_node) -> void:
-	clear_highlight()
+	clear_indicators()
 
 # Срабатывает мгновенно в начале движения юнита
 func _on_unit_movement_started(_unit_node, _from_pos):
-	clear_highlight()
+	selection_channel.deselect_unit()
 
-func clear_highlight() -> void:
-	for pos in highlighted_positions:
-		var cell_node = grid_model.get_cell(pos)
-		if is_instance_valid(cell_node) and cell_node.has_method("set_highlight"):
-			cell_node.set_highlight(false)
-	highlighted_positions.clear()
+
+func _spawn_indicator_at(grid_pos: Vector2):
+	var cell_node = grid_model.get_cell(grid_pos)
+	if cell_node:
+		var indicator = indicator_scene.instance()
+		cell_node.add_child(indicator)
+		
+		if "position" in indicator:
+			indicator.position = Vector2.ZERO
+			
+		if "grid_position" in indicator:
+			indicator.grid_position = grid_pos
+			
+		_active_indicators[grid_pos] = indicator
+
+
+func clear_indicators():
+	for grid_pos in _active_indicators.keys():
+		var indicator = _active_indicators[grid_pos]
+		if is_instance_valid(indicator):
+			indicator.queue_free()
+	_active_indicators.clear()

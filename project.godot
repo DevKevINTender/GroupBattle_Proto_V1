@@ -42,7 +42,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "MoveIndicatorManager",
 "language": "GDScript",
-"path": "res://Main/MoveIndicatorManager.gd"
+"path": "res://Main/MoveRangeManager.gd"
 }, {
 "base": "Resource",
 "class": "SelectionData",

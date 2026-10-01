@@ -1,9 +1,9 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Main/UnitMovementManager.gd" type="Script" id=1]
 [ext_resource path="res://Main/MapManager.gd" type="Script" id=2]
-[ext_resource path="res://Main/AttackRangeVisualizer.gd" type="Script" id=3]
-[ext_resource path="res://Main/MoveIndicatorManager.gd" type="Script" id=4]
+[ext_resource path="res://Main/AttackRangeManager.gd" type="Script" id=3]
+[ext_resource path="res://Main/MoveRangeManager.gd" type="Script" id=4]
 [ext_resource path="res://Model/LevelData/Level1/Level1.tres" type="Resource" id=5]
 [ext_resource path="res://Model/TurnData/TurnModel.tres" type="Resource" id=6]
 [ext_resource path="res://Model/SelectionData/RangeSelectionModel.tres" type="Resource" id=7]
@@ -18,6 +18,7 @@
 [ext_resource path="res://Main/BattleManager.gd" type="Script" id=16]
 [ext_resource path="res://Main/TurnButton.gd" type="Script" id=17]
 [ext_resource path="res://Main/EnemySpawnManager.gd" type="Script" id=18]
+[ext_resource path="res://Logic/MoveIndicator/AttackIndicator.tscn" type="PackedScene" id=19]
 
 [node name="Main" type="Node"]
 
@@ -52,9 +53,9 @@ grid_model = ExtResource( 9 )
 unit_grid_model = ExtResource( 11 )
 selection_model = ExtResource( 10 )
 unit_move_model = ExtResource( 8 )
-indicator_manager_path = NodePath("MoveIndicatorManager")
+indicator_manager_path = NodePath("MoveRangeManager")
 
-[node name="MoveIndicatorManager" type="Node" parent="UnitMovementManager"]
+[node name="MoveRangeManager" type="Node" parent="UnitMovementManager"]
 script = ExtResource( 4 )
 indicator_scene = ExtResource( 13 )
 grid_model = ExtResource( 9 )
@@ -72,8 +73,9 @@ script = ExtResource( 16 )
 unit_grid_model = ExtResource( 11 )
 turn_model = ExtResource( 6 )
 
-[node name="AttackRangeVisualizer" type="Node" parent="."]
+[node name="AttackRangeManager" type="Node" parent="."]
 script = ExtResource( 3 )
+indicator_scene = ExtResource( 19 )
 grid_model = ExtResource( 9 )
 selection_channel = ExtResource( 7 )
 unit_move_model = ExtResource( 8 )
