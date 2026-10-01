@@ -52,12 +52,17 @@ _global_script_classes=[ {
 "base": "Area2D",
 "class": "MoveIndicator",
 "language": "GDScript",
-"path": "res://Logic/MoveIndicator/MoveIndicator.gd"
+"path": "res://Logic/Indicators/MoveIndicator/MoveIndicator.gd"
 }, {
 "base": "Node",
 "class": "MoveIndicatorManager",
 "language": "GDScript",
 "path": "res://Main/MoveRangeManager.gd"
+}, {
+"base": "Node2D",
+"class": "RotateComponent",
+"language": "GDScript",
+"path": "res://Logic/RotateComponent/RotateComponent.gd"
 }, {
 "base": "Resource",
 "class": "SelectionData",
@@ -95,6 +100,7 @@ _global_script_class_icons={
 "MoveComponent": "",
 "MoveIndicator": "",
 "MoveIndicatorManager": "",
+"RotateComponent": "",
 "SelectionData": "",
 "TurnData": "",
 "Unit": "",

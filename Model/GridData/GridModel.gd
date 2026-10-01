@@ -13,6 +13,10 @@ export(Dictionary) var cells = {}
 func clear_data() -> void:
 	cells.clear()
 
+func invoke_signal(name: String, grid_pos: Vector2):
+	print(name, "вызвал сигнал cell_clicked")
+	emit_signal("cell_clicked", grid_pos)
+
 ## Метод для самостоятельной регистрации клеток
 func register_cell(grid_pos: Vector2, cell_node: Node) -> void:
 	cells[grid_pos] = cell_node

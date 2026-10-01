@@ -53,16 +53,19 @@ func _get_targets_for_unit(attacker: Unit) -> Array:
 	var found_targets = []
 	
 	var component = _get_component(attacker, AttackComponent)
-	
 	if component == null: 
 		return found_targets
 	
+	var rotation_angle = Vector2.LEFT.angle_to(component.attack_direction)
 
 	for offset in component.attack_pattern:
-		var target_cell = attacker.grid_position + offset	
+		
+		var rotated_offset = offset.rotated(rotation_angle).round()
+		var target_cell = attacker.grid_position + rotated_offset
+		
 		var target_unit = unit_grid_model.get_unit_at(target_cell)
 		if target_unit == null:
-			break
+			continue
 		var target_team = _get_component(target_unit, HpComponent).team
 		var attacker_team = _get_component(attacker, HpComponent).team
 		if target_team != attacker_team:
