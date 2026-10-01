@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 
 export(PackedScene) var indicator_scene
 export(Resource) var grid_model
@@ -17,41 +17,32 @@ func _ready():
 	if unit_move_model:
 		unit_move_model.connect("unit_movement_started", self, "_on_unit_movement_started")
 
-func _on_unit_selected(unit_node: Node2D) -> void:
-	clear_indicators()
-	print("AttackRangeVisualizer: получен сигнал - юнит выбран")
-
-	for offset in unit_node.attack_pattern:
-		_create_indicators_for(unit_node, offset)
-
-func _create_indicators_for(unit_node: Node2D, offset: Vector2):
-	var target_pos = unit_node.grid_position + offset
-	if grid_model.is_position_inside_bounds(target_pos):
-		var cell_node = grid_model.get_cell(target_pos)
-		_spawn_indicator_at(target_pos)
-		
 
 func _on_unit_deselected(_unit_node) -> void:
 	clear_indicators()
 
-# Срабатывает мгновенно в начале движения юнита
+
 func _on_unit_movement_started(_unit_node, _from_pos):
 	selection_channel.deselect_unit()
 
 
-func _spawn_indicator_at(grid_pos: Vector2):
-	var cell_node = grid_model.get_cell(grid_pos)
-	if cell_node:
-		var indicator = indicator_scene.instance()
-		cell_node.add_child(indicator)
-		
-		if "position" in indicator:
-			indicator.position = Vector2.ZERO
-			
-		if "grid_position" in indicator:
-			indicator.grid_position = grid_pos
-			
-		_active_indicators[grid_pos] = indicator
+func _on_unit_selected(unit_node: Node2D) -> void:
+	clear_indicators()
+	print("AttackRangeVisualizer: получен сигнал - юнит выбран")
+	var cell_size = grid_model.cell_size
+	for offset in unit_node.attack_pattern:
+		_create_indicators_for(unit_node, offset, cell_size)
+
+
+func _create_indicators_for(unit_node: Node2D, offset: Vector2, cell_size: int):
+	var target_pos = unit_node.global_position + offset * cell_size 
+	print(name, "создает индиктор в ", target_pos)
+	var indicator = indicator_scene.instance()
+	self.add_child(indicator)
+	var world_pos = (target_pos) - Vector2(cell_size / 2, cell_size / 2)
+	
+	indicator.global_position = target_pos
+	_active_indicators[target_pos] = indicator
 
 
 func clear_indicators():

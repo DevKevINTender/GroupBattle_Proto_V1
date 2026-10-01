@@ -2,6 +2,7 @@ extends Resource
 
 export(int) var width = 4
 export(int) var height = 4
+export(int) var cell_size = 100
 
 # Сигнал, на который подпишется менеджер перемещений
 signal cell_clicked(grid_pos)

@@ -18,7 +18,7 @@
 [ext_resource path="res://Main/BattleManager.gd" type="Script" id=16]
 [ext_resource path="res://Main/TurnButton.gd" type="Script" id=17]
 [ext_resource path="res://Main/EnemySpawnManager.gd" type="Script" id=18]
-[ext_resource path="res://Logic/MoveIndicator/AttackIndicator.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Logic/AttackIndicator/AttackIndicator.tscn" type="PackedScene" id=19]
 
 [node name="Main" type="Node"]
 
@@ -73,7 +73,7 @@ script = ExtResource( 16 )
 unit_grid_model = ExtResource( 11 )
 turn_model = ExtResource( 6 )
 
-[node name="AttackRangeManager" type="Node" parent="."]
+[node name="AttackRangeManager" type="Node2D" parent="."]
 script = ExtResource( 3 )
 indicator_scene = ExtResource( 19 )
 grid_model = ExtResource( 9 )
