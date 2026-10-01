@@ -7,4 +7,4 @@
 script = ExtResource( 1 )
 level_index = 1
 section_index = 1
-enemies_to_spawn = [ ExtResource( 2 ) ]
+enemies_to_spawn = [ ExtResource( 2 ), ExtResource( 2 ) ]

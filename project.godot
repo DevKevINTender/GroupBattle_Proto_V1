@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "AttackComponent",
 "language": "GDScript",
-"path": "res://Logic/AttackComponent/AttackComponent.gd"
+"path": "res://Logic/Unit/Components/AttackComponent/AttackComponent.gd"
 }, {
 "base": "Resource",
 "class": "BattleGridData",
@@ -37,7 +37,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "HpComponent",
 "language": "GDScript",
-"path": "res://Logic/HpComponent/HpComponent.gd"
+"path": "res://Logic/Unit/Components/HpComponent/HpComponent.gd"
 }, {
 "base": "Resource",
 "class": "LevelConfiguration",
@@ -47,7 +47,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "MoveComponent",
 "language": "GDScript",
-"path": "res://Logic/MoveComponent/MoveComponent.gd"
+"path": "res://Logic/Unit/Components/MoveComponent/MoveComponent.gd"
 }, {
 "base": "Area2D",
 "class": "MoveIndicator",
@@ -62,7 +62,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "RotateComponent",
 "language": "GDScript",
-"path": "res://Logic/RotateComponent/RotateComponent.gd"
+"path": "res://Logic/Unit/Components/RotateComponent/RotateComponent.gd"
 }, {
 "base": "Resource",
 "class": "SelectionData",
