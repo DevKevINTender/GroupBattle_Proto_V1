@@ -1,5 +1,4 @@
 extends Resource
-class_name GridDataResource
 
 export(int) var width = 4
 export(int) var height = 4

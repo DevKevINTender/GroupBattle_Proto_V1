@@ -8,7 +8,7 @@ export(int) var cell_size = 100
 export(int) var spacing = 4
 
 func _ready():
-	if grid_model and grid_model is GridDataResource:
+	if grid_model and grid_model:
 		generate_map()
 
 func generate_map() -> void:

@@ -27,12 +27,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "EnemySpawnManager",
 "language": "GDScript",
-"path": "res://Logic/Main/EnemySpawnManager.gd"
-}, {
-"base": "Resource",
-"class": "GridDataResource",
-"language": "GDScript",
-"path": "res://Model/GridData/GridModel.gd"
+"path": "res://Main/EnemySpawnManager.gd"
 }, {
 "base": "Resource",
 "class": "LevelConfiguration",
@@ -47,7 +42,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "MoveIndicatorManager",
 "language": "GDScript",
-"path": "res://Logic/Main/MoveIndicatorManager.gd"
+"path": "res://Main/MoveIndicatorManager.gd"
 }, {
 "base": "Resource",
 "class": "SelectionData",
@@ -72,14 +67,13 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "UnitMovementManager",
 "language": "GDScript",
-"path": "res://Logic/Main/UnitMovementManager.gd"
+"path": "res://Main/UnitMovementManager.gd"
 } ]
 _global_script_class_icons={
 "BattleGridData": "",
 "Cell": "",
 "EnemySpawnData": "",
 "EnemySpawnManager": "",
-"GridDataResource": "",
 "LevelConfiguration": "",
 "MoveIndicator": "",
 "MoveIndicatorManager": "",
@@ -93,7 +87,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Group Battle Proto V 1"
-run/main_scene="res://Logic/Main/Main.tscn"
+run/main_scene="res://Main/Main.tscn"
 config/icon="res://icon.png"
 
 [gui]
