@@ -25,7 +25,7 @@ func start_combat_round():
 	
 	var all_units = unit_grid_model.get_all_units()
 	print("Всего юнитов до сортировки: ", all_units.size())
-#	all_units.sort_custom(self, "_sort_by_initiative")
+	all_units.sort_custom(self, "_sort_by_initiative")
 	
 	print("Всего юнитов: ", all_units.size())
 	
@@ -78,7 +78,11 @@ func _get_targets_for_unit(attacker: Unit) -> Array:
 	return found_targets
 
 func _sort_by_initiative(unit_a, unit_b) -> bool:
-	return unit_a.initiative > unit_b.initiative
+	var attack_a = _get_component(unit_a, AttackComponent)
+	var attack_b = _get_component(unit_b, AttackComponent)
+	var init_a = attack_a.initiative if attack_a else 0
+	var init_b = attack_b.initiative if attack_b else 0
+	return init_a > init_b
 	
 	
 func _get_component(node: Node, type: Script) -> Node:
